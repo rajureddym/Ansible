@@ -1,0 +1,9 @@
+[webservers]
+<ip_add_machine>
+
+[dev]
+<ip_add_machine>
+
+[east]
+
+[west]

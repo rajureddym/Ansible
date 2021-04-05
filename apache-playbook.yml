@@ -1,0 +1,34 @@
+- name: install and start apache
+  hosts: webservers
+  remote_user: ec2-user
+  become: yes
+  vars:
+    http_port: 8080
+
+  tasks:
+    - name: install apache & other required libraries
+      yum: 
+        name: "{{ item }}" 
+        state: present
+      loop:
+        - httpd
+
+    - name: start apache
+      service: name=httpd state=started enabled=yes
+    
+    - name: create index.html page
+      file:
+        path: /var/www/html/index.html
+        state: touch
+
+    - name: Default HTTP Server page
+      shell: echo "<h3>Welcome, apache is deployed through Ansible</h3>" >> /var/www/html/index.html
+
+    - name: change apache listening default port to {{ http_port }}
+      lineinfile: dest=/etc/httpd/conf/httpd.conf regexp="^Listen " line="Listen {{ http_port }}" state=present
+      notify:
+        - restart apache
+
+  handlers:
+  - name: restart apache
+    service: name=httpd state=restarted
