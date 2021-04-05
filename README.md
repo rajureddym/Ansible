@@ -18,6 +18,7 @@
     - published as collections in ansible galaxy
 - It requires minimal resources, so there’s low overhead
     - Python is the only required dependency
+
 **Ansible concepts:**
 
 - `Control Node`: A machine with installed ansible to run ansible commands/playbooks 
@@ -132,5 +133,7 @@
 
 
 *Some ansible commands*
+
 > ansible all -m ping -vvv
+
 > ansible-playbook -i hosts apache-playbook.yml --private-key <key_pair_file_path>
